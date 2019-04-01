@@ -1,6 +1,6 @@
 from Node import Node
 
-class FilaSequencial:
+class FS:
 
     def __init__(self,tamanhoMax):
 
@@ -32,3 +32,59 @@ class FilaSequencial:
     def remover(self):
 
         self.fila = self.fila[1:]
+        self.size -= 1
+
+
+class FE:
+
+    def __init__(self):
+
+        self.primeiro = None
+        self.ultimo = None
+
+    def inserir(self, node):
+
+        if not self.primeiro:
+
+            self.primeiro = node
+            self.ultimo = node
+
+        else:
+
+            self.ultimo.prox = node
+            self.ultimo = node
+
+    def remover(self):
+
+        if self.primeiro:
+
+            k = self.primeiro.prox
+
+            self.primeiro.prox = None
+
+            self.primeiro = k
+
+    def acessar(self):
+
+        if self.primeiro: return self.primeiro.valor
+
+    def varrer(self):
+
+        node = self.primeiro
+
+        while node:
+
+            print(node,end=' ')
+            node = node.prox
+
+        print()
+
+
+f = FE()
+f.inserir(Node(7))
+f.inserir(Node(3))
+f.inserir(Node(4))
+f.inserir(Node(1))
+f.inserir(Node(8))
+f.remover()
+f.varrer()
