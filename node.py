@@ -6,6 +6,8 @@ class Node:
 
         self.prox = None
 
+
+
     def __str__(self):
 
         return str(self.valor)

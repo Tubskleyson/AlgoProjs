@@ -44,6 +44,7 @@ class FE:
 
     def inserir(self, node):
 
+
         if not self.primeiro:
 
             self.primeiro = node
@@ -83,12 +84,12 @@ class FE:
 
         l = 0
 
-        nde = self.primeiro
+        node = self.primeiro
 
-        while nde:
+        while node:
 
             l += 1
-            nde = nde.prox
+            node = node.prox
 
         return l
 
@@ -96,31 +97,60 @@ class FE:
 
         return self.lre(self.primeiro)
 
-    def lre(self, nde):
+    def lre(self, node):
 
-        if not nde: return 0
+        if not node: return 0
 
-        return 1 + self.lre(nde.prox)
+        return 1 + self.lre(node.prox)
 
-    def altura(self, nde):
+    def altura(self, node):
 
-        return self.lre(nde.prx)
+        return self.lre(node.prox)
 
-    def profundidade(self, nde):
+    def profundidade(self, node):
 
-        return self.altura(self.primeiro) - self.altura(nde)
+        return self.altura(self.primeiro) - self.altura(node)
 
     def ordenada(self):
 
-        if
+        ord = 1
+
+        node = self.primeiro
+
+        while node.prox:
+
+            ord *= node.valor < node.prox.valor
+            node = node.prox
+
+        return bool(ord)
 
 
-f = FE()
-f.inserir(Node(7))
-f.inserir(Node(3))
-f.inserir(Node(4))
-f.inserir(Node(1))
-f.inserir(Node(8))
-f.remover()
-print(f.length_re())
-f.varrer()
+    def compara_it(self, fila):
+
+        if self.length_it() != fila.length_it(): return False
+
+        n1 = self.primeiro
+        n2 = fila.primeiro
+
+        iguais = 1
+
+        while n1 and n2:
+
+            iguais *= n1.valor == n2.valor
+            n1 = n1.prox
+            n2 = n2.prox
+
+        return bool(iguais)
+
+    def compara_re(self, fila):
+
+        if self.length_it() != fila.length_it(): return False
+
+        return bool(self.cre(self.primeiro, fila.primeiro))
+
+    def cre(self, n1, n2):
+
+        if not n1: return 1
+        return n1.valor==n2.valor * self.cre(n1.prox, n2.prox)
+
+
