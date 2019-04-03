@@ -1,4 +1,4 @@
-from Node import Node
+from node import Node
 
 class FS:
 
@@ -79,6 +79,41 @@ class FE:
 
         print()
 
+    def length_it(self):
+
+        l = 0
+
+        nde = self.primeiro
+
+        while nde:
+
+            l += 1
+            nde = nde.prox
+
+        return l
+
+    def length_re(self):
+
+        return self.lre(self.primeiro)
+
+    def lre(self, nde):
+
+        if not nde: return 0
+
+        return 1 + self.lre(nde.prox)
+
+    def altura(self, nde):
+
+        return self.lre(nde.prx)
+
+    def profundidade(self, nde):
+
+        return self.altura(self.primeiro) - self.altura(nde)
+
+    def ordenada(self):
+
+        if
+
 
 f = FE()
 f.inserir(Node(7))
@@ -87,4 +122,5 @@ f.inserir(Node(4))
 f.inserir(Node(1))
 f.inserir(Node(8))
 f.remover()
+print(f.length_re())
 f.varrer()
