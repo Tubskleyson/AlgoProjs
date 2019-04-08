@@ -4,10 +4,8 @@ class Node:
 
         self.valor = valor
 
-        self.prox = None
 
 
+    def __repr__(self):
 
-    def __str__(self):
-
-        return str(self.valor)
+        return 'Node de valor '+str(self.valor)
