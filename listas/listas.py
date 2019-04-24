@@ -52,7 +52,7 @@ class LE:
         self.raiz = None
 
 
-    def unshift(self, node):
+    def shift(self, node):
 
         node.prox = self.raiz
         self.raiz = node
@@ -60,7 +60,7 @@ class LE:
 
     def push(self, node):
 
-        if not self.raiz: return self.unshift(node)
+        if not self.raiz: return self.shift(node)
 
         n = self.raiz
 
@@ -84,6 +84,7 @@ class LE:
 
             self.raiz = node.prox
             del node
+            return
 
 
         while node.prox:
@@ -97,3 +98,67 @@ class LE:
                 return
 
             node = node.prox
+
+
+    def count_it(self):
+
+        node = self.raiz
+
+        r = 0
+
+        while node: 
+            
+            r+=1
+            node = node.prox
+
+        return r
+
+
+    def count_rec(self):
+        
+        return self.cr(self.raiz)
+
+
+    def cr(self, node):
+
+        if not node: return 0
+        return 1 + self.cr(node.prox)
+
+    def ord(self):
+
+        o = 1
+
+        node = self.raiz
+
+        while node and node.prox:
+
+            if node > node.prox: o = 1; break
+            node = node.prox
+
+        return bool(o)
+
+    
+    def min_rec(self):
+
+        return self.mr(self.raiz, self.raiz).valor
+
+    def mr(self, node, m):
+
+        if not node: return m
+        
+        if node.valor < m.valor: m = node
+        return self.mr(node.prox, m)
+
+
+
+
+
+lista = LE()
+
+lista.push(Node(3))
+lista.push(Node(5))
+lista.shift(Node(7))
+
+
+
+
