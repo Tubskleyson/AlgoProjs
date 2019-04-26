@@ -34,6 +34,9 @@ class FS:
         self.fila = self.fila[1:]
         self.size -= 1
 
+    def compr(self):
+        return self.size
+
 
 class FE:
 

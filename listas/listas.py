@@ -1,5 +1,6 @@
 from node import Node
 
+
 class LS:
 
     def __init__(self):
@@ -15,7 +16,7 @@ class LS:
 
         if pos > self.tamanho: return False
 
-        for i in range(pos, self.tamanho): self.lista[i+1] = self.lista[i]
+        for i in range(pos, self.tamanho): self.lista[i + 1] = self.lista[i]
 
         self.lista[pos] = node
         self.tamanho += 1
@@ -23,22 +24,19 @@ class LS:
 
         return True
 
-
     def remover(self, pos):
 
         if self.tamanho < pos: return 0
 
         node = self.lista[pos]
 
-        for i in range(pos, self.tamanho): self.lista[i] = self.lista[i+1]
+        for i in range(pos, self.tamanho): self.lista[i] = self.lista[i + 1]
 
         del self.lista[self.tamanho]
 
         self.tamanho -= 1
 
         return node
-
-
 
     def varrer(self):
 
@@ -51,12 +49,10 @@ class LE:
 
         self.raiz = None
 
-
     def shift(self, node):
 
         node.prox = self.raiz
         self.raiz = node
-
 
     def push(self, node):
 
@@ -66,7 +62,6 @@ class LE:
 
         while n.prox: n = n.prox
 
-
         n.prox = node
 
     def varrer(self):
@@ -75,22 +70,18 @@ class LE:
 
         while node: print(node); node = node.prox
 
-
     def kill(self, valor):
 
         node = self.raiz
 
         if node.valor == valor:
-
             self.raiz = node.prox
             del node
             return
 
-
         while node.prox:
 
             if node.prox.valor == valor:
-
                 target = node.prox
                 node.prox = target.prox
 
@@ -99,6 +90,20 @@ class LE:
 
             node = node.prox
 
+    def kill_last(self):
+
+        node = self.raiz
+
+        if not node.prox:
+            del self.raiz
+            return
+
+        while node.prox.prox: node = node.prox
+
+        last = node.prox
+        node.prox = None
+        del last
+        return
 
     def count_it(self):
 
@@ -106,18 +111,15 @@ class LE:
 
         r = 0
 
-        while node: 
-            
-            r+=1
+        while node:
+            r += 1
             node = node.prox
 
         return r
 
-
     def count_rec(self):
-        
-        return self.cr(self.raiz)
 
+        return self.cr(self.raiz)
 
     def cr(self, node):
 
@@ -132,12 +134,11 @@ class LE:
 
         while node and node.prox:
 
-            if node > node.prox: o = 1; break
+            if node.valor > node.prox.valor: o = 0; break
             node = node.prox
 
         return bool(o)
 
-    
     def min_rec(self):
 
         return self.mr(self.raiz, self.raiz).valor
@@ -145,31 +146,91 @@ class LE:
     def mr(self, node, m):
 
         if not node: return m
-        
+
         if node.valor < m.valor: m = node
         return self.mr(node.prox, m)
-
 
     def min_it(self):
 
         m = self.raiz
+        node = self.raiz
 
         while node:
 
             if node.valor < m.valor: m = node
             node = node.prox
-        
-        return node
 
+        return m
 
+    def clone_rec(self):
 
-lista = LE()
+        clone = LE()
 
-lista.push(Node(3))
-lista.push(Node(5))
-lista.shift(Node(7))
-print('hi')
+        return self.clr(self.raiz, clone)
 
+    def clr(self, node, clone):
 
+        if not node: return clone
 
+        clone_node = Node(node.valor)
+        clone.push(clone_node)
+        return self.clr(node.prox, clone)
 
+    def clone_it(self):
+
+        clone = LE()
+        node = self.raiz
+
+        while node:
+            clone_node = Node(node.valor)
+            clone.push(clone_node)
+            node = node.prox
+
+        return clone
+
+    def mid(self):
+
+        l = self.clone_rec()
+
+        if not l.raiz: return None
+
+        while l.raiz.prox:
+
+            l.kill(l.raiz.valor)
+            if l.raiz.prox: l.kill_last()
+
+        mid = l.raiz
+        del l
+        return mid
+
+    def switch(self, ia, ib):
+
+        if ia > ib: ia, ib = ib, ia
+
+        node = self.raiz
+        for i in range(1, ib):
+            if i == ia: na = node
+            node = node.prox
+
+        if ia:
+
+            na.prox.prox, node.prox.prox = node.prox.prox, na.prox.prox
+            na.prox, node.prox = node.prox, na.prox
+
+        else:
+            self.raiz.prox, node.prox.prox = node.prox.prox, self.raiz.prox
+            node.prox, self.raiz = self.raiz, node.prox
+
+    def parse_it(self, vetor):
+
+        for i in vetor: self.push(Node(i))
+
+    def parse_rec(self, vetor):
+
+        self.prc(vetor, 0)
+
+    def prc(self, vetor, index):
+
+        if index >= len(vetor): return
+        self.push(Node(vetor[index]))
+        self.prc(vetor, index + 1)
