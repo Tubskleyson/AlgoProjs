@@ -150,6 +150,16 @@ class LE:
         return self.mr(node.prox, m)
 
 
+    def min_it(self):
+
+        m = self.raiz
+
+        while node:
+
+            if node.valor < m.valor: m = node
+            node = node.prox
+        
+        return node
 
 
 
@@ -158,6 +168,7 @@ lista = LE()
 lista.push(Node(3))
 lista.push(Node(5))
 lista.shift(Node(7))
+print('hi')
 
 
 
