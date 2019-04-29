@@ -234,3 +234,58 @@ class LE:
         if index >= len(vetor): return
         self.push(Node(vetor[index]))
         self.prc(vetor, index + 1)
+
+
+class LEC:
+
+    def __init__(self):
+
+        self.raiz = None
+
+    def iniciar(self, node):
+
+        node.prox = node
+        self.raiz = node
+
+    def last(self):
+
+        node = self.raiz
+
+        while node.prox != self.raiz: node = node.prox
+
+        return node
+
+    def shift(self, node):
+
+        if not self.raiz: self.iniciar(node)
+
+        node.prox = self.raiz
+        self.last().prox = node
+        self.raiz = node
+
+    def push(self, node):
+
+        if not self.raiz: self.iniciar(node)
+
+        self.last().prox = node
+        node.prox = self.raiz
+
+    def varrer(self):
+
+        node = self.raiz
+        print(node)
+
+        while node.prox != self.raiz:
+
+            print(node.prox)
+            node = node.prox
+
+
+l = LEC()
+
+l.push(Node(6))
+l.push(Node(3))
+l.push(Node(8))
+l.shift(Node(2))
+
+l.varrer()
