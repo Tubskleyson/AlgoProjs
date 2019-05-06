@@ -280,8 +280,64 @@ class LEC:
             print(node.prox)
             node = node.prox
 
+class LDE:
 
-l = LEC()
+    def __init__(self):
+
+        self.raiz = None
+    
+    def shift(self, node):
+
+        if not self.raiz: self.raiz = node
+
+        else:
+
+            node.prox = self.raiz
+            self.raiz.ant = node
+            self.raiz = node
+
+        return 1
+    
+    def push(self, node):
+
+        n = self.raiz
+
+        if not n: self.raiz = node
+
+        else:
+                
+            while n.prox: n = n.prox
+
+            n.prox = node
+            node.ant = n
+
+        return 1
+    
+    def get(self, valor):
+
+        node = self.raiz
+
+        while node and node.prox:
+
+            if node.valor == valor: return node
+            node = node.prox
+        
+        return 0
+
+    def varrer(self):
+
+        node = self.raiz
+        
+        while node:
+
+            print(node)
+            node = node.prox
+        
+        return 1
+
+
+
+l = LDE()
 
 l.push(Node(6))
 l.push(Node(3))

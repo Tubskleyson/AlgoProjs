@@ -4,6 +4,7 @@ class Node:
 
         self.valor = valor
         self.prox = None
+        self.ant = None
 
 
 
