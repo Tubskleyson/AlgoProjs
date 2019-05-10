@@ -258,17 +258,18 @@ class LEC:
     def shift(self, node):
 
         if not self.raiz: self.iniciar(node)
-
-        node.prox = self.raiz
-        self.last().prox = node
-        self.raiz = node
+        else:
+            node.prox = self.raiz
+            self.last().prox = node
+            self.raiz = node
 
     def push(self, node):
 
         if not self.raiz: self.iniciar(node)
 
-        self.last().prox = node
-        node.prox = self.raiz
+        else:
+            self.last().prox = node
+            node.prox = self.raiz
 
     def varrer(self):
 
@@ -317,6 +318,8 @@ class LDE:
 
         node = self.raiz
 
+        if node.valor == valor: return node
+
         while node and node.prox:
 
             if node.valor == valor: return node
@@ -335,13 +338,67 @@ class LDE:
         
         return 1
 
+class LCD:
 
+    def __init__(self):
 
-l = LDE()
+        self.raiz = None
 
-l.push(Node(6))
-l.push(Node(3))
-l.push(Node(8))
-l.shift(Node(2))
+    def iniciar(self, node):
 
-l.varrer()
+        node.prox = node
+        node.ant = node
+        self.raiz = node
+
+    def last(self):
+
+        return self.raiz.ant
+    
+    def shift(self, node):
+
+        if not self.raiz: self.iniciar(node)
+        
+        else:
+
+            node.prox = self.raiz
+            node.ant = self.raiz.ant
+            self.raiz.ant.prox = node
+            self.raiz.ant = node
+
+            self.raiz = node
+        
+    def push(self, node):
+
+        if not self.raiz: self.iniciar(node)
+        
+        else:
+
+            self.last().prox = node
+            node.ant = self.last()
+            node.prox = self.raiz
+            self.raiz.ant = node
+    
+    
+    def varrer(self):
+
+        node = self.raiz
+        print(node)
+
+        while node.prox != self.raiz:
+
+            print(node.prox)
+            node = node.prox
+
+    def get(self, valor):
+
+        node = self.raiz
+
+        while node:
+
+            if node.valor == valor: return node
+
+            node = node.prox
+            
+            if node == self.raiz: break
+
+        return 0 
