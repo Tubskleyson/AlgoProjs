@@ -42,6 +42,10 @@ class LS:
 
         for i in range(self.tamanho): print(self.lista[i])
 
+class LCS:
+
+    def __init__(self)
+
 
 class LE:
 
