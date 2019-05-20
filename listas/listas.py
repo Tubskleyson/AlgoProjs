@@ -238,6 +238,70 @@ class LE:
         if index >= len(vetor): return
         self.push(Node(vetor[index]))
         self.prc(vetor, index + 1)
+        
+class LSC:
+
+  def __init__(self, maximo):
+    
+    self.lista = [None] 
+    self.maximo = maximo
+    self.tamanho = 0
+    self.ultimo = -1    
+
+  def inserir(self, valor):
+
+    print("\nInserindo item de valor {} ".format(valor))
+
+    if self.tamanho == self.maximo:
+
+      print("\n[ ERRO ] Lista cheia")
+      return
+
+    pos = self.acessar(None)
+    
+    self.lista[pos] = Node(valor)
+    self.tamanho += 1
+    
+    if pos == self.ultimo+1:
+      
+      self.ultimo = pos
+      self.lista.append(None)
+
+  def remover(self, valor):
+
+    print("\nProcurando item de valor {} para remoção".format(valor))
+
+    pos = self.acessar(valor)
+
+
+    if pos < 0: 
+
+      return
+    
+    self.lista[pos] = None
+    self.tamanho -= 1
+    print("Item removido")
+
+  def acessar(self, valor):
+  
+    pos = self.accrec(valor, 0)
+
+    if valor != None:
+      if pos >= 0: print("O item de valor {} está na posição {}".format(valor, pos))
+      else: print("O item de valor {} não foi encontrado".format(valor))
+
+    return pos
+  
+  def accrec(self, valor, i):
+
+    if i > self.tamanho: return -1
+    if self.lista[i] == valor: return i 
+    if self.lista[i] and self.lista[i].valor == valor: return i
+    return self.accrec(valor, i+1)
+  
+  def varrer(self):
+
+    print('\n',self.lista[:-1],'\n')
 
 
 class LEC:
