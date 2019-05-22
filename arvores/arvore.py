@@ -28,6 +28,20 @@ class Arvore:
         node.pai = pai
 
 
+    def remover(self, valor):
+
+        node = self.acessar(valor)
+
+        if not node: return 0
+        
+        if node.filhos: return 0
+
+        node.pai.filhos.remove(node)
+        node.pai = None
+
+        return node
+
+
     def acessar(self, valor, node = 0):
 
         if not node: node = self.raiz
@@ -42,6 +56,7 @@ class Arvore:
                 if node: return node
         
         return 0
+       
 
     
     def varrer(self, node=0, indent=0):
@@ -82,6 +97,24 @@ class ArvoreBin:
         else: return 0
         
         node.pai = pai
+
+    
+    def remover(self, valor):
+
+        node = self.acessar(valor)
+
+        if not node: return 0
+        
+        if node.fa or node.fb: return 0
+
+        pai = node.pai
+        
+        if pai.fa == node: pai.fa = None
+        if pai.fb == node: pai.fb = None
+            
+        node.pai = None
+
+        return node
 
     
     def acessar(self, valor, node = 0):
