@@ -5,3 +5,6 @@ class Node:
         self.valor = valor
         self.pai = None
         self.filhos = []
+
+        self.fa = None
+        self.fb = None
