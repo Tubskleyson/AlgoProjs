@@ -89,6 +89,8 @@ class ArvoreBin:
         if not node: node = self.raiz
 
         if node.valor == valor: return node
+        
+        res = 0
 
         if node.fa: res = self.acessar(valor, node.fa)
         
