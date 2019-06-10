@@ -232,4 +232,4 @@ class ArvoreBusca:
 
 a = ArvoreBusca()
 
-a.inserir_raiz(20)
+a.inserir_raiz(21)
