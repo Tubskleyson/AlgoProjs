@@ -143,8 +143,93 @@ class ArvoreBin:
         if node.fa: self.varrer(node.fa,indent+1)
         if node.fb: self.varrer(node.fb,indent+1)
 
+class ArvoreBusca:
+
+    def __init__(self):
+
+        self.raiz = None
+    
+    
+    def inserir_raiz(self, raiz):
+
+        if not self.raiz: 
+            self.raiz = Node(raiz)
+            return 1
+
+        return 0
+
+    def inserir(self, valor):
+
+        pai = self.raiz
+        node = Node(valor)
+
+        while 1:
+
+            if valor == pai.valor:
+
+                return 0
+
+            elif valor < pai.valor:
+
+                if pai.fa: pai = pai.fa
+                else:
+                    pai.fa = node
+                    node.pai = pai
+                    break
+            
+            else:
+
+                if pai.fb: pai = pai.fb
+                else:
+                    pai.fb = node
+                    node.pai = pai
+                    break
+        return 1
+
+
+    def remover(self, valor):
+
+        node = self.acessar(valor)
+
+        if not node: return 0
+        
+        if node.fa or node.fb: return 0
+
+        pai = node.pai
+        
+        if pai.fa == node: pai.fa = None
+        if pai.fb == node: pai.fb = None
+            
+        node.pai = None
+
+        return node
+
+    
+    def acessar(self, valor, node = 0):
+
+        if not node: node = self.raiz
+
+        if node.valor == valor: return node
+        
+        res = 0
+
+        if valor < node.valor: res = self.acessar(valor, node.fa)
+        else: res = self.acessar(valor, node.fa)            
+        
+        return res
+
+    
+    def varrer(self, node=0, indent=0):
+
+        if not node: node = self.raiz
+
+        print("|{}{}".format("--"*indent, node.valor))
+
+        if node.fa: self.varrer(node.fa,indent+1)
+        if node.fb: self.varrer(node.fb,indent+1)
+
             
 
-a = ArvoreBin()
+a = ArvoreBusca()
 
 a.inserir_raiz(20)
