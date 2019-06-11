@@ -269,19 +269,13 @@ class AVL:
                     pai.fb = node
                     node.pai = pai
                     break
-        return 1
+        
+        self.check(node)
     
     def altura(self, node):
 
         if not node: return 0
         else: return 1 + max(self.altura(node.fa), self.altura(node.fb))
-    
-    def fator(self, node):
-
-        fe = self.altura(node.fa)
-        fd = self.altura(node.fb)
-
-        return -fe+fd
 
     def acessar(self, valor, node = 0):
 
@@ -296,6 +290,22 @@ class AVL:
         
         return res
 
+    def check(self, node):
+
+        fe = self.altura(node.fa)
+        fd = self.altura(node.fb)
+
+        fator = -fe+fd
+
+        if abs(fator) > 1:
+
+            self.balanceia(node, fator)
+        
+        if node != self.raiz: self.check(node.pai)
+    
+    def balanceia(self, node, fator):
+
+        print("Balanceando node de valor %d e fator %d" %(node.valor, fator))
     
     def varrer(self, node=0, indent=0):
 
