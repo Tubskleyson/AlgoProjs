@@ -272,7 +272,6 @@ class AVL:
                     break
         
         self.check(node)
-        self.check(node)
     
     def altura(self, node):
 
@@ -349,6 +348,8 @@ class AVL:
                 
                 npai.pai = node.pai
                 self.inserir(node, npai)
+
+            if node.fa: self.check(node.fa)
         
         if fator < 0:
 
@@ -380,6 +381,8 @@ class AVL:
                 
                 npai.pai = node.pai
                 self.inserir(node, npai)
+
+            if node.fb: self.check(node.fb)
 
     
     def varrer(self, node=0, indent=0):
