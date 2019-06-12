@@ -243,18 +243,19 @@ class AVL:
 
         return 0
 
-    def inserir(self, valor):
+    def inserir(self, node, pai = 0):
 
-        pai = self.raiz
-        node = Node(valor)
+        if not pai: 
+            pai = self.raiz
+            node = Node(node)
 
         while 1:
 
-            if valor == pai.valor:
+            if node.valor == pai.valor:
 
                 return 0
 
-            elif valor < pai.valor:
+            elif node.valor < pai.valor:
 
                 if pai.fa: pai = pai.fa
                 else:
@@ -270,6 +271,7 @@ class AVL:
                     node.pai = pai
                     break
         
+        self.check(node)
         self.check(node)
     
     def altura(self, node):
@@ -300,12 +302,85 @@ class AVL:
         if abs(fator) > 1:
 
             self.balanceia(node, fator)
+            return
         
         if node != self.raiz: self.check(node.pai)
+
+    def fator(self, node):
+
+        fe = self.altura(node.fa)
+        fd = self.altura(node.fb)
+
+        return -fe+fd
     
     def balanceia(self, node, fator):
 
-        print("Balanceando node de valor %d e fator %d" %(node.valor, fator))
+        if node == self.raiz: print("Balanceando raiz")
+
+        if fator > 0:
+
+            npai = node.fb
+
+            if self.fator(npai) < 0:
+
+                print('dupla')
+
+                node.fb = npai.fa
+                npai.fa.pai = node
+                npai.fa.fb = npai
+                npai.pai = npai.fa 
+                npai.fa = None
+
+                self.balanceia(node, fator)
+                return
+
+            if node == self.raiz:
+                
+                node.fb = None
+                npai.pai = None
+                self.raiz = npai
+                self.inserir(node,npai)
+            
+            else:
+                node.fb = None
+                
+                if node.pai.fa == node: node.pai.fa = npai
+                else: node.pai.fb = npai
+                
+                npai.pai = node.pai
+                self.inserir(node, npai)
+        
+        if fator < 0:
+
+            npai = node.fa
+
+            if self.fator(npai) > 0:
+
+                node.fa = npai.fb
+                npai.fb.pai = node
+                npai.fb.fa = npai
+                npai.pai = npai.fb 
+                npai.fb = None
+
+                self.balanceia(node, fator)
+                return
+
+            if node == self.raiz:
+                
+                node.fa = None
+                npai.pai = None
+                self.raiz = npai
+                self.inserir(node,npai)
+            
+            else:
+                node.fa = None
+                
+                if node.pai.fb == node: node.pai.fb = npai
+                else: node.pai.fa = npai
+                
+                npai.pai = node.pai
+                self.inserir(node, npai)
+
     
     def varrer(self, node=0, indent=0):
 
